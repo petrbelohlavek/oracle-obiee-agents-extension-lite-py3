@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<saw:ibot xmlns:saw="com.siebel.analytics.web/report/v1.1" xmlns:cond="com.oracle.bi/conditions/v1" xmlns:sawx="com.siebel.analytics.web/expression/v1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1" priority="normal" jobID="1397">
+  <saw:schedule>
+    <saw:start startImmediately="false" date="2019-11-03" time="10:00:00"/>
+    <saw:recurrence runOnce="false">
+      <saw:monthly>
+        <saw:months jan="true" feb="true" mar="true" apr="true" may="true" jun="true" jul="true" aug="true" sep="true" oct="true" nov="true" dec="true"/>
+        <saw:monthlyDate>
+          <saw:dayOfMonth value="1"/>
+        </saw:monthlyDate>
+      </saw:monthly>
+    </saw:recurrence>
+  </saw:schedule>
+  <saw:dataVisibility type="runAsUser" runAs="SECURITY_DEPARTMENT" runAsGuid="a570242068b735dfb2d1e95e"/>
+  <cond:condition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sawkpi="com.siebel.analytics.web/kpi/v1" name="ROWCOUNT(&#39;analysis_license_tracking&#39;) &gt; 1" autoGenerateName="true">
+    <cond:comparison op="greater">
+      <cond:rowcount op="ROWCOUNT">
+        <saw:reportRef path="/shared/System Reports/License/analysis_license_tracking"/>
+      </cond:rowcount>
+      <sawx:expr xsi:type="xsd:decimal">1</sawx:expr>
+    </cond:comparison>
+  </cond:condition>
+  <saw:choose>
+    <saw:when condition="true">
+      <saw:deliveryContent disposition="attachment" format="pdf">
+        <saw:headline>
+          <saw:caption captionID="kcap1468243996917_2">
+            <saw:text>License tracking</saw:text>
+          </saw:caption>
+        </saw:headline>
+        <saw:reportRef path="/shared/System Reports/License/analysis_license_tracking"/>
+        <saw:attachmentMessage>
+          <saw:caption captionID="kcap9969182468243_3">
+            <saw:text>Dear customer,
+
+we are sending the analysis of Licence Tracking.
+
+Sincerely your
+
+Security Department</saw:text>
+          </saw:caption>
+        </saw:attachmentMessage>
+      </saw:deliveryContent>
+      <saw:postActions/>
+    </saw:when>
+    <saw:otherwise>
+      <saw:postActions/>
+      <saw:deliveryContent>
+        <saw:message>
+          <saw:caption captionID="kcap9969182468243_4">
+            <saw:text>Dear customer,
+
+we are sending the analysis of Licence Tracking.
+
+Sincerely your
+
+Security Department</saw:text>
+          </saw:caption>
+        </saw:message>
+      </saw:deliveryContent>
+    </saw:otherwise>
+  </saw:choose>
+  <saw:deliveryDestinations>
+    <saw:destination category="pcemail"/>
+  </saw:deliveryDestinations>
+  <saw:recipients specificRecipients="false" subscribers="false" customize="false">
+    <saw:specificRecipients/>
+    <saw:subscribers/>
+  </saw:recipients>
+  <saw:emailRecipients>
+    <saw:emailRecipient address="peter.newman@company.com" type="HTML"/>
+    <saw:emailRecipient address="george.green@company.com" type="HTML"/>
+  </saw:emailRecipients>
+</saw:ibot>

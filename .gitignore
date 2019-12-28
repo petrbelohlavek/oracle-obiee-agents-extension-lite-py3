@@ -1,0 +1,14 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore folder ".idea" (PyCharm settings)
+.idea
+
+# Ignore folder "__pycache__"
+__pycache__
+
+# Ignore .report files in folder "log"
+/log/*.report
+
+# Ignore .stats files in folder "log"
+/log/*.stats

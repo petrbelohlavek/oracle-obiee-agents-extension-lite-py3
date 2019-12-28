@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<saw:ibot xmlns:saw="com.siebel.analytics.web/report/v1.1" xmlns:cond="com.oracle.bi/conditions/v1" xmlns:sawx="com.siebel.analytics.web/expression/v1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1" priority="normal" jobID="271">
+  <saw:schedule>
+    <saw:start startImmediately="false" date="2019-02-12" time="09:05:00"/>
+    <saw:recurrence runOnce="false">
+      <saw:weekly weekInterval="1" tue="true"/>
+    </saw:recurrence>
+  </saw:schedule>
+  <saw:dataVisibility type="runAsUser" runAs="SECURITY_DEPARTMENT" runAsGuid="67db504b1123ada05bfb9f8f"/>
+  <cond:condition xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sawkpi="com.siebel.analytics.web/kpi/v1" name="ROWCOUNT(&#39;analysis_checking_privileges&#39;) &gt; 0" autoGenerateName="true">
+    <cond:comparison op="greater">
+      <cond:rowcount op="ROWCOUNT">
+        <saw:reportRef path="/shared/System Reports/Security/analysis_checking_privileges"/>
+      </cond:rowcount>
+      <sawx:expr xsi:type="xsd:decimal">0</sawx:expr>
+    </cond:comparison>
+  </cond:condition>
+  <saw:choose>
+    <saw:when condition="true">
+      <saw:deliveryContent disposition="attachment" format="csv">
+        <saw:headline>
+          <saw:caption captionID="kcap2468243996990_6">
+            <saw:text>Checking privileges</saw:text>
+          </saw:caption>
+        </saw:headline>
+        <saw:reportRef path="/shared/System Reports/Security/analysis_checking_privileges"/>
+        <saw:attachmentMessage>
+          <saw:caption captionID="kcap2468243996990_7">
+            <saw:text>Checking privileges</saw:text>
+          </saw:caption>
+        </saw:attachmentMessage>
+      </saw:deliveryContent>
+      <saw:postActions/>
+    </saw:when>
+    <saw:otherwise>
+      <saw:postActions/>
+    </saw:otherwise>
+  </saw:choose>
+  <saw:deliveryDestinations>
+    <saw:destination category="pcemail"/>
+  </saw:deliveryDestinations>
+  <saw:recipients specificRecipients="false" subscribers="false" customize="false">
+    <saw:specificRecipients/>
+    <saw:subscribers/>
+  </saw:recipients>
+  <saw:emailRecipients>
+    <saw:emailRecipient address="john.doe@company.com" type="HTML"/>
+    <saw:emailRecipient address="alex.freeman@company.com" type="HTML"/>
+  </saw:emailRecipients>
+</saw:ibot>
