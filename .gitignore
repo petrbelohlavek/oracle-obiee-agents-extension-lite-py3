@@ -1,6 +1,9 @@
 # Ignore Mac system files
 .DS_store
 
+# Ignore Python Compiled (pyc) files
+*.pyc
+
 # Ignore folder ".idea" (PyCharm settings)
 .idea
 

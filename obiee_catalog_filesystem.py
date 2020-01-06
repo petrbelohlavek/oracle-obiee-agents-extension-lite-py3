@@ -1,7 +1,9 @@
 import sys
+
 print(sys.stdout.encoding)
 if sys.version[0] == '2':
     from importlib import reload
+
     reload(sys)
     sys.setdefaultencoding('utf8')
 import os
@@ -145,10 +147,14 @@ class ObiCatalogFS(object):
         self.report_name = self.report_datetime_str + report_name_base + report_suffix
         self.report_file = open('{}/log/{}'.format(self.report_abs_path, self.report_name), "w")
         field_trans = obiee_fields_transformation.FieldsTransformation(self.fields_enclosed, self.fields_terminated)
-        first_line = field_trans.get_field_encl_term('JOB_ID') + field_trans.get_field_encl_term(
-            'PARAM') + field_trans.get_field_encl_term('VALUE') + field_trans.get_field_encl_term(
-            'INSERTED') + field_trans.get_field_encl_term('FILE_MODIFIED') + field_trans.get_field_encl_term(
-            'SCHEDULE_START') + field_trans.get_field_encl_newln('START_IMMEDIATELY')
+        first_line = field_trans.get_field_encl_term('JOB_ID') + \
+                     field_trans.get_field_encl_term('PARAM') + \
+                     field_trans.get_field_encl_term('VALUE') + \
+                     field_trans.get_field_encl_term('INSERTED') + \
+                     field_trans.get_field_encl_term('FILE_MODIFIED') + \
+                     field_trans.get_field_encl_term('SCHEDULE_START') + \
+                     field_trans.get_field_encl_term('START_IMMEDIATELY') + \
+                     field_trans.get_field_encl_newln('VALID')
         self.report_file.write(first_line)
 
     def load_agents_from_xml_to_file(self):

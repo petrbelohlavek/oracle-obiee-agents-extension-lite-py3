@@ -23,6 +23,7 @@ class ObieeAgentXml(object):
         self.schedule_start__sqlplus_insert = None
         self.file_created = datetime.fromtimestamp(os.path.getctime(self.file_path)).strftime('%Y-%m-%d %H:%M:%S')
         self.file_modified = datetime.fromtimestamp(os.path.getmtime(self.file_path)).strftime('%Y-%m-%d %H:%M:%S')
+        self.valid = 'Y'
 
     def extract_data_from_xml_tree_to_object(self, obiee_ag_xml, storing_method):
         ns_mapping = {'saw': self.xml_namespace_saw, 'cond': self.xml_namespace_cond}
@@ -106,40 +107,54 @@ class ObieeAgentXml(object):
         field_trans = obiee_fields_transformation.FieldsTransformation(fields_enclosed, fields_terminated)
 
         # reportRef
-        report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) + field_trans.get_field_encl_term(
-            'reportRef') + field_trans.get_field_encl_term(obiee_ag_xml.report_ref) + field_trans.get_field_encl_term(
-            datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + field_trans.get_field_encl_term(
-            obiee_ag_xml.file_modified) + field_trans.get_field_encl_term(
-            self.schedule_start__file_insert) + field_trans.get_field_encl_newln(self.schedule_start_immediately))
+        report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) +
+                          field_trans.get_field_encl_term('reportRef') +
+                          field_trans.get_field_encl_term(obiee_ag_xml.report_ref) +
+                          field_trans.get_field_encl_term(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) +
+                          field_trans.get_field_encl_term(obiee_ag_xml.file_modified) +
+                          field_trans.get_field_encl_term(self.schedule_start__file_insert) +
+                          field_trans.get_field_encl_term(self.schedule_start_immediately) +
+                          field_trans.get_field_encl_newln(self.valid))
 
         # emailRecipient
         for email_recipient in self.email_recipients:
-            report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) + field_trans.get_field_encl_term(
-                'emailRecipient') + field_trans.get_field_encl_term(email_recipient) + field_trans.get_field_encl_term(
-                datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + field_trans.get_field_encl_term(
-                obiee_ag_xml.file_modified) + field_trans.get_field_encl_term(
-                self.schedule_start__file_insert) + field_trans.get_field_encl_newln(self.schedule_start_immediately))
+            report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) +
+                              field_trans.get_field_encl_term('emailRecipient') +
+                              field_trans.get_field_encl_term(email_recipient) +
+                              field_trans.get_field_encl_term(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) +
+                              field_trans.get_field_encl_term(obiee_ag_xml.file_modified) +
+                              field_trans.get_field_encl_term(self.schedule_start__file_insert) +
+                              field_trans.get_field_encl_term(self.schedule_start_immediately) +
+                              field_trans.get_field_encl_newln(self.valid))
 
         # filePath
-        report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) + field_trans.get_field_encl_term(
-            'filePath') + field_trans.get_field_encl_term(obiee_ag_xml.file_path) + field_trans.get_field_encl_term(
-            datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + field_trans.get_field_encl_term(
-            obiee_ag_xml.file_modified) + field_trans.get_field_encl_term(
-            self.schedule_start__file_insert) + field_trans.get_field_encl_newln(self.schedule_start_immediately))
+        report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) +
+                          field_trans.get_field_encl_term('filePath') +
+                          field_trans.get_field_encl_term(obiee_ag_xml.file_path) +
+                          field_trans.get_field_encl_term(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) +
+                          field_trans.get_field_encl_term(obiee_ag_xml.file_modified) +
+                          field_trans.get_field_encl_term(self.schedule_start__file_insert) +
+                          field_trans.get_field_encl_term(self.schedule_start_immediately) +
+                          field_trans.get_field_encl_newln(self.valid))
 
         # deliveryDestination
         for delivery_destination in self.delivery_destinations:
-            report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) + field_trans.get_field_encl_term(
-                'deliveryDestination') + field_trans.get_field_encl_term(
-                delivery_destination) + field_trans.get_field_encl_term(
-                datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + field_trans.get_field_encl_term(
-                obiee_ag_xml.file_modified) + field_trans.get_field_encl_term(
-                self.schedule_start__file_insert) + field_trans.get_field_encl_newln(self.schedule_start_immediately))
+            report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) +
+                              field_trans.get_field_encl_term('deliveryDestination') +
+                              field_trans.get_field_encl_term(delivery_destination) +
+                              field_trans.get_field_encl_term(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) +
+                              field_trans.get_field_encl_term(obiee_ag_xml.file_modified) +
+                              field_trans.get_field_encl_term(self.schedule_start__file_insert) +
+                              field_trans.get_field_encl_term(self.schedule_start_immediately) +
+                              field_trans.get_field_encl_newln(self.valid))
 
         # j2eeApp
         for action_j2ee_app in self.action_j2ee_apps:
-            report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) + field_trans.get_field_encl_term(
-                'actionJ2eeApp') + field_trans.get_field_encl_term(action_j2ee_app) + field_trans.get_field_encl_term(
-                datetime.now().strftime('%Y-%m-%d %H:%M:%S')) + field_trans.get_field_encl_term(
-                obiee_ag_xml.file_modified) + field_trans.get_field_encl_term(
-                self.schedule_start__file_insert) + field_trans.get_field_encl_newln(self.schedule_start_immediately))
+            report_file.write(field_trans.get_field_encl_term(obiee_ag_xml.job_id) +
+                              field_trans.get_field_encl_term('actionJ2eeApp') +
+                              field_trans.get_field_encl_term(action_j2ee_app) +
+                              field_trans.get_field_encl_term(datetime.now().strftime('%Y-%m-%d %H:%M:%S')) +
+                              field_trans.get_field_encl_term(obiee_ag_xml.file_modified) +
+                              field_trans.get_field_encl_term(self.schedule_start__file_insert) +
+                              field_trans.get_field_encl_term(self.schedule_start_immediately) +
+                              field_trans.get_field_encl_newln(self.valid))
